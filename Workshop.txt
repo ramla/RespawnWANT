@@ -1,0 +1,6 @@
+version=1
+id=2687842971
+title=Respawn
+description=v1.23 - New option to respawn the same character with skills and traits.
+tags=Build 41;Multiplayer
+visibility=public

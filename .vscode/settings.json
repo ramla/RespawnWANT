@@ -1,0 +1,12 @@
+{
+    "Lua.diagnostics.globals": [
+        "PerkFactory",
+        "Events",
+        "getFileWriter",
+        "getFileReader",
+        "getWorld",
+        "ProfessionFactory",
+        "TraitFactory",
+        "CharacterCreationProfession"
+    ]
+}
