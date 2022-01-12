@@ -3,28 +3,26 @@ Respawn.SaveFile = "respawn_player_%s.json";
 local json = require("json");
 
 function Respawn.SaveUpdate()
-    local save = Respawn.GetSaveName();
-    local file = getFileWriter(save, true, false);
+    local path = Respawn.GetSaveName();
+    local file = getFileWriter(path, true, false);
 
-    if file == nil then
-        return nil;
+    local save = {};
+    for i, recoverable in ipairs(Respawn.Recoverables) do
+        save[recoverable.Type] = recoverable.Content;
     end
     
-    local str = json.stringify(Respawn.Update, false);
-    
-    file:write(str);
+    file:write(json.stringify(save, false));
     file:close();
 end
 
 function Respawn.LoadUpdate()
-    local save = Respawn.GetSaveName();
-    local file = getFileReader(save, false);
-
-    if file == nil then
-        return nil;
+    local path = Respawn.GetSaveName();
+    local file = getFileReader(path, false);
+    
+    local save = json.parse(file:readLine());
+    for i, recoverable in ipairs(Respawn.Recoverables) do
+        recoverable.Content = save[recoverable.Type];
     end
-
-    return json.parse(file:readLine());
 end
 
 function Respawn.GetSaveName()

@@ -3,7 +3,7 @@ local Original_SetVisible = CharacterCreationProfession.setVisible;
 function CharacterCreationProfession:setVisible(visible, joypadData)
     Original_SetVisible(self, visible, joypadData);
 
-    if not (visible and Respawn.RespawnAvailable()) then
+    if not visible or not Respawn.RespawnAvailable() or Respawn.CreatedRespawnProfession()  then
         return;
     end
     
@@ -15,12 +15,19 @@ function CharacterCreationProfession:setVisible(visible, joypadData)
 end
 
 function Respawn.RespawnAvailable()
-    if Respawn.Update ~= nil then
-        return true;
+    return pcall(Respawn.LoadUpdate);
+end
+
+function Respawn.CreatedRespawnProfession()
+    local profs = ProfessionFactory.getProfessions();
+
+    for i = 0, profs:size() - 1 do
+        if profs:get(i):getType() == Respawn.Id then
+            return true;
+        end
     end
 
-    Respawn.Update = Respawn.LoadUpdate();
-    return Respawn.Update ~= nil;
+    return false;
 end
 
 function Respawn.CreateRespawnProfession()
