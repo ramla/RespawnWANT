@@ -1,6 +1,6 @@
 version=1
 id=2687842971
 title=Respawn
-description=v1.23 - New option to respawn the same character with skills and traits.
+description=v1.24 - New option to respawn the same character with skills and traits. Works in multiplayer as well.
 tags=Build 41;Multiplayer
 visibility=public
