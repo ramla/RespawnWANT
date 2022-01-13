@@ -1,5 +1,20 @@
 RecoverableLevels = Recoverable:Derive("Levels");
 
+function RecoverableLevels:Update(player)
+    self.Content = {};
+
+    local perks = PerkFactory.PerkList;
+
+    for i = 0, perks:size() - 1 do
+        local perk = perks:get(i);
+        local level = player:getPerkLevel(perk);
+
+        if level > 0 then
+            self.Content[perk:getName()] = level;
+        end
+    end
+end
+
 function RecoverableLevels:Recover(player)
     for perkName, targetLevel in pairs(self.Content) do
         local perk = PerkFactory.getPerkFromName(perkName);
@@ -13,20 +28,5 @@ function RecoverableLevels:Recover(player)
         end
 
         player:getXp():setXPToLevel(perk, targetLevel);
-    end
-end
-
-function RecoverableLevels:Update(player)
-    self.Content = {};
-
-    local perks = PerkFactory.PerkList;
-
-    for i = 0, perks:size() - 1 do
-        local perk = perks:get(i);
-        local level = player:getPerkLevel(perk);
-
-        if level > 0 then
-            self.Content[perk:getName()] = level;
-        end
     end
 end

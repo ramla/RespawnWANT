@@ -18,8 +18,14 @@ end
 function Respawn.LoadUpdate()
     local path = Respawn.GetSaveName();
     local file = getFileReader(path, false);
+    local line = file:readLine();
     
-    local save = json.parse(file:readLine());
+    local success, save = pcall(json.parse, line);
+
+    if not success then
+        return;
+    end
+
     for i, recoverable in ipairs(Respawn.Recoverables) do
         recoverable.Content = save[recoverable.Type];
     end

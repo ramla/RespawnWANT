@@ -3,11 +3,11 @@ Recoverable = {};
 Recoverable.Type = "Recoverable";
 Recoverable.Content = {};
 
-function Recoverable:Recover(player)
+function Recoverable:Update(player)
     error("Not implemented");
 end
 
-function Recoverable:Update(player)
+function Recoverable:Recover(player)
     error("Not implemented");
 end
 
