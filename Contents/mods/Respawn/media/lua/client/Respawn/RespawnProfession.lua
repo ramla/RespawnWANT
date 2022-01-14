@@ -15,7 +15,7 @@ function CharacterCreationProfession:setVisible(visible, joypadData)
 end
 
 function Respawn.RespawnAvailable()
-    return pcall(Respawn.LoadUpdate);
+    return Respawn.LoadRecoverables();
 end
 
 function Respawn.CreatedRespawnProfession()

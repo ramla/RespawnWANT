@@ -3,7 +3,7 @@ function Respawn.UpdatePlayer(player)
         recoverable:Update(player);
     end
 
-    Respawn.SaveUpdate();
+    Respawn.SaveRecoverables();
 end
 
 Events.OnPlayerDeath.Add(Respawn.UpdatePlayer);
