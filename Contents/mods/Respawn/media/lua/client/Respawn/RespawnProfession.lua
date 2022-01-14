@@ -10,7 +10,6 @@ function CharacterCreationProfession:setVisible(visible, joypadData)
     local prof = Respawn.CreateRespawnProfession();
 
     self.listboxProf:insertItem(0, 0, prof);
-    self.listboxProf.selected = 0;
     self:onSelectProf(prof);
 end
 
