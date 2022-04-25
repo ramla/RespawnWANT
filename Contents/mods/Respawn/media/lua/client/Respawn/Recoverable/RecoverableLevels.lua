@@ -9,9 +9,7 @@ function RecoverableLevels:Update(player)
         local perk = perks:get(i);
         local level = player:getPerkLevel(perk);
 
-        if level > 0 then
-            self.Content[perk:getName()] = level;
-        end
+        self.Content[perk:getName()] = level;
     end
 end
 
