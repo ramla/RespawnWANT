@@ -4,7 +4,6 @@ function Respawn.OnCreatePlayer(id, player)
     end
 
     for i, recoverable in ipairs(Respawn.Recoverables) do
-        print(recoverable.Type);
         recoverable:Recover(player);
     end
 end

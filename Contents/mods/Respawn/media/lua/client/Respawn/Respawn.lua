@@ -14,3 +14,4 @@ Respawn.AddRecoverable(RecoverableLevels);
 Respawn.AddRecoverable(RecoverableTraits);
 Respawn.AddRecoverable(RecoverableRecipes);
 Respawn.AddRecoverable(RecoverableOccupation);
+Respawn.AddRecoverable(RecoverableWeight);
