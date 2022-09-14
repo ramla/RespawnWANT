@@ -1,7 +1,7 @@
-RecoverableBoosts = Recoverable:Derive("Boosts");
+RecoverableBoosts = {};
 
-function RecoverableBoosts:Update(player)
-    self.Content = {};
+function RecoverableBoosts:Save(player)
+    Respawn.Data.Stats.Boosts = {};
 
     local perks = PerkFactory.PerkList;
     local xp = player:getXp();
@@ -11,15 +11,15 @@ function RecoverableBoosts:Update(player)
         local boost = xp:getPerkBoost(perk);
 
         if boost > 0 then
-            self.Content[perk:getName()] = boost;
+            Respawn.Data.Stats.Boosts[perk:getName()] = boost;
         end
     end
 end
 
-function RecoverableBoosts:Recover(player)
+function RecoverableBoosts:Load(player)
     local prof = ProfessionFactory.getProfession(Respawn.Id);
 
-    for perkName, boost in pairs(self.Content) do
+    for perkName, boost in pairs(Respawn.Data.Stats.Boosts) do
         prof:addXPBoost(PerkFactory.getPerkFromName(perkName), boost);
     end
 

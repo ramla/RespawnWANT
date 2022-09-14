@@ -1,18 +1,18 @@
-RecoverableRecipes = Recoverable:Derive("Recipies");
+RecoverableRecipes = {};
 
-function RecoverableRecipes:Update(player)
-    self.Content = {};
+function RecoverableRecipes:Save(player)
+    Respawn.Data.Stats.Recipes = {};
+
     local recipes = player:getKnownRecipes();
-
     for i = 0, recipes:size() - 1 do
-        table.insert(self.Content, recipes:get(i));
+        table.insert(Respawn.Data.Stats.Recipes, recipes:get(i));
     end
 end
 
-function RecoverableRecipes:Recover(player)
+function RecoverableRecipes:Load(player)
     local recipes = player:getKnownRecipes();
 
-    for i, recipe in ipairs(self.Content) do
+    for i, recipe in ipairs(Respawn.Data.Stats.Recipes) do
         recipes:add(recipe);
     end
 end

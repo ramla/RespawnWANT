@@ -1,44 +1,8 @@
+local Original_Create = CharacterCreationProfession.create;
 local Original_SetVisible = CharacterCreationProfession.setVisible;
+local Profession;
 
-function CharacterCreationProfession:setVisible(visible, joypadData)
-    Original_SetVisible(self, visible, joypadData);
-
-    if not visible or not Respawn.RespawnAvailable() or Respawn.CreatedRespawnProfession()  then
-        return;
-    end
-    
-    local prof = Respawn.CreateRespawnProfession();
-
-    self.listboxProf:insertItem(0, 0, prof);
-    self:onSelectProf(prof);
-end
-
-function Respawn.RespawnAvailable()
-    return Respawn.LoadRecoverables();
-end
-
-function Respawn.CreatedRespawnProfession()
-    local profs = ProfessionFactory.getProfessions();
-
-    for i = 0, profs:size() - 1 do
-        if profs:get(i):getType() == Respawn.Id then
-            return true;
-        end
-    end
-
-    return false;
-end
-
-function Respawn.CreateRespawnProfession()
-    local prof = ProfessionFactory.addProfession(Respawn.Id, Respawn.Name, "", 0);
-    
-    Respawn.CreateRespawnTrait();
-    prof:addFreeTrait(Respawn.Id);
-
-    return prof;
-end
-
-function Respawn.CreateRespawnTrait()
+local function CreateRespawnTrait()
     TraitFactory.addTrait(Respawn.Id, Respawn.Name, 0, "Reject zombiehood", true, false);
 
     local traits = TraitFactory.getTraits();
@@ -47,18 +11,50 @@ function Respawn.CreateRespawnTrait()
     end
 end
 
-function CharacterCreationProfession:resetBuild()
-    local index = 1;
+local function CreateRespawnProfession()
+    local prof = ProfessionFactory.addProfession(Respawn.Id, Respawn.Name, "", 0);
+    
+    CreateRespawnTrait();
+    prof:addFreeTrait(Respawn.Id);
 
-    while self.listboxProf.items[index].item:getType() ~= "unemployed" do
-        index = index + 1;
+    return prof;
+end
+
+local function GetRespawnAvailable()
+    local available = Respawn.File.Load(Respawn.AvailablePath);
+
+    return available and available[Respawn.GetUserID()];
+end
+
+function CharacterCreationProfession:create()
+    Original_Create(self);
+
+    Profession = CreateRespawnProfession();
+end
+
+function CharacterCreationProfession:setVisible(visible, joypadData)
+    Original_SetVisible(self, visible, joypadData);
+
+    if not visible then
+        return;
     end
 
-    self.listboxProf.selected = index;
-    self:onSelectProf(self.listboxProf.items[self.listboxProf.selected].item);
+    self:removeRespawnProfession();
 
-    while #self.listboxTraitSelected.items > 0 do
-        self.listboxTraitSelected.selected = 1;
-        self:onOptionMouseDown(self.removeTraitBtn);
+    if GetRespawnAvailable() then
+        writeLog(Respawn.GetLogName(), "respawn available!");
+        self:addRespawnProfession();
     end
+end
+
+function CharacterCreationProfession:addRespawnProfession()
+    self.listboxProf:insertItem(0, Respawn.Id, Profession);
+    self:onSelectProf(Profession);
+end
+
+function CharacterCreationProfession:removeRespawnProfession()
+    self.listboxProf:removeItem(Respawn.Id);
+
+    self.listboxProf.selected = 1;
+    self:onSelectProf(self.listboxProf.items[1].item);
 end

@@ -1,9 +1,9 @@
-RecoverableOccupation = Recoverable:Derive("Occupation");
+RecoverableOccupation = {};
 
-function RecoverableOccupation:Update(player)
-    self.Content = player:getDescriptor():getProfession();
+function RecoverableOccupation:Save(player)
+    Respawn.Data.Stats.Occupation = player:getDescriptor():getProfession();
 end
 
-function RecoverableOccupation:Recover(player)
-    player:getDescriptor():setProfession(self.Content);
+function RecoverableOccupation:Load(player)
+    player:getDescriptor():setProfession(Respawn.Data.Stats.Occupation);
 end

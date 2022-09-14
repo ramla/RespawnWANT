@@ -1,9 +1,9 @@
-RecoverableWeight = Recoverable:Derive("Weight");
+RecoverableWeight = {};
 
-function RecoverableWeight:Update(player)
-    self.Content = player:getNutrition():getWeight();
+function RecoverableWeight:Save(player)
+    Respawn.Data.Stats.Weight = player:getNutrition():getWeight();
 end
 
-function RecoverableWeight:Recover(player)
-    player:getNutrition():setWeight(self.Content);
+function RecoverableWeight:Load(player)
+    player:getNutrition():setWeight(Respawn.Data.Stats.Weight);
 end

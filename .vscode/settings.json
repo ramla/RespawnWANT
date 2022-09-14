@@ -1,12 +1,24 @@
 {
     "Lua.diagnostics.globals": [
-        "PerkFactory",
-        "Events",
-        "getFileWriter",
-        "getFileReader",
-        "getWorld",
+        "isClient",
+        "ModData",
         "ProfessionFactory",
         "TraitFactory",
-        "CharacterCreationProfession"
+        "CharacterCreationProfession",
+        "PerkFactory",
+        "Events",
+        "getPlayer",
+        "getFileReader",
+        "getWorld",
+        "ModOptions",
+        "getFileWriter",
+        "getGameClient",
+        "getClientUsername",
+        "sendClientCommand",
+        "sendServerCommand",
+        "writeLog",
+        "saveGame",
+        "save",
+        "isServer"
     ]
 }

@@ -1,18 +1,18 @@
-RecoverableTraits = Recoverable:Derive("Traits");
+RecoverableTraits = {};
 
-function RecoverableTraits:Update(player)
-    self.Content = {};
+function RecoverableTraits:Save(player)
+    Respawn.Data.Stats.Traits = {};
+    
     local traits = player:getTraits();
-
     for i = 0, traits:size() - 1 do
-        table.insert(self.Content, traits:get(i));
+        table.insert(Respawn.Data.Stats.Traits, traits:get(i));
     end
 end
 
-function RecoverableTraits:Recover(player)
+function RecoverableTraits:Load(player)
     player:getTraits():clear();
 
-    for i, trait in ipairs(self.Content) do
+    for i, trait in ipairs(Respawn.Data.Stats.Traits) do
         player:getTraits():add(trait);
     end
 end
