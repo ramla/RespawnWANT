@@ -1,28 +1,32 @@
 local LoadingPlayer = false;
 
-local function LoadPlayer()
-    if not getPlayer():HasTrait(Respawn.Id) then
+local function LoadPlayer(player)
+    if not player:HasTrait(Respawn.Id) then
         return;
     end
 
     LoadingPlayer = false;
     for i, recoverable in ipairs(Respawn.Recoverables) do
-        recoverable:Load(getPlayer());
+        recoverable:Load(player);
     end
 end
 
 local function OnCreatePlayer(id, player)
-    if not getPlayer():HasTrait(Respawn.Id) then
+    print(IsoPlayer:getUniqueFileName());
+    if isClient() then
+        Respawn.Sync.LoadRemote();
+    else
+        Respawn.Data.Stats = ModData.get(Respawn.GetModDataStatsKey()) or {};
+    end
+
+    if not player:HasTrait(Respawn.Id) then
         return;
     end
 
     LoadingPlayer = true;
 
-    if isClient() then
-        Respawn.Sync.LoadRemote();
-    else
-        Respawn.Data.Stats = ModData.get(Respawn.GetModDataStatsKey());
-        LoadPlayer();
+    if not isClient() then
+        LoadPlayer(player);
     end
 end
 
@@ -31,7 +35,7 @@ local function OnReceiveModData(key, modData)
         return;
     end
 
-    LoadPlayer();
+    LoadPlayer(getPlayer());
 end
 
 Events.OnCreatePlayer.Add(OnCreatePlayer);
