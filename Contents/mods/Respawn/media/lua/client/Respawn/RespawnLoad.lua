@@ -12,7 +12,6 @@ local function LoadPlayer(player)
 end
 
 local function OnCreatePlayer(id, player)
-    print(IsoPlayer:getUniqueFileName());
     if isClient() then
         Respawn.Sync.LoadRemote();
     else
