@@ -1,4 +1,4 @@
-version=1.33
+version=1
 id=2687842971
 title=Respawn
 description=New option to respawn the same character with skills and traits. Works in multiplayer.
@@ -10,5 +10,7 @@ description=
 description=For multiplayer the options file is "Zomboid/Lua/respawn-options.json". To change the XP kept change the XPRestored value to 1-20 for % XP, where XP kept is that value multiplied by 5. For example, 10 means 50% XP will be kept on respawn. The default value of 21 is "Last Level" where you lose progress to the next level but can never lose levels. Changing the config will require a restart to take effect.
 description=
 description=Multiplayer servers may need to disable AntiCheatProtectionType15 in the servertest.ini file to prevent players from getting kicked when respawning.
+description=
+description=Source for the mod: https://github.com/StarkSilence/Respawn
 tags=Build 41;Multiplayer
 visibility=public
