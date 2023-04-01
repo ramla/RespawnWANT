@@ -3,16 +3,20 @@ local Original_SetVisible = CharacterCreationProfession.setVisible;
 local Profession;
 
 local function CreateRespawnTrait()
-    TraitFactory.addTrait(Respawn.Id, Respawn.Name, 0, "Reject zombiehood", true, false);
+    TraitFactory.addTrait(Respawn.Id, Respawn.Name, 0, "Reject zombiehood", true, false)
 
     local traits = TraitFactory.getTraits();
+    print("traitshit goin on");
+    print(traits:size());
     for i = 0, traits:size() - 1 do
-        TraitFactory.setMutualExclusive(Respawn.Id, traits:get(i):getType());
+        if traits:get(i):getCost() >= 0 then
+        TraitFactory.setMutualExclusive(Respawn.Id, traits:get(i):getType())
+        end
     end
 end
 
 local function CreateRespawnProfession()
-    local prof = ProfessionFactory.addProfession(Respawn.Id, Respawn.Name, "", 0);
+    local prof = ProfessionFactory.addProfession(Respawn.Id, Respawn.Name, "", -1);
     
     CreateRespawnTrait();
     prof:addFreeTrait(Respawn.Id);
