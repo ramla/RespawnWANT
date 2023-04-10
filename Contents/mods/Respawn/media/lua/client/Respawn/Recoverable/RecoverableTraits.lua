@@ -10,7 +10,7 @@ function RecoverableTraits:Save(player)
 end
 
 function RecoverableTraits:Load(player)
-    player:getTraits():clear();
+    --player:getTraits():clear();
 
     for i, trait in ipairs(Respawn.Data.Stats.Traits) do
         player:getTraits():add(trait);
